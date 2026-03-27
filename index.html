@@ -1,0 +1,38 @@
+<form action="">
+    <button>Connect with the BLE device</button>
+</form>
+<script>
+    function isWebBLEAvailable(){
+        if (!navigator.bluetooth) {
+            console.log('web Bluetooth is not available!')
+            return false
+        }
+        return true
+    }
+    
+    function getBLEDeviceInfo() {
+        let options = {
+            acceptAllDevices: true
+        }
+
+        console.log('Requesting Bluetooth Device...')
+        navigator.bluetooth.requestDevice(options).then(device => {
+            console.log('> Name:             ' + device.name)
+        }).catch(error => {
+            console.log('Argh! ' + error)
+        })
+
+        
+    }
+
+
+document.querySelector('form').addEventListener('submit', event => {
+   function(event)
+    event.stopPropagation()
+    event.preventDefault()
+
+    if (isWebBLEAvailable()) {
+        getBLEDeviceInfo()
+
+    }})
+</script>
