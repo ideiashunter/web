@@ -1,38 +1,41 @@
-<form action="">
-    <button>Connect with the BLE device</button>
+<form>
+  <button>Connect with BLE device</button>
 </form>
+
 <script>
-    function isWebBLEAvailable(){
-        if (!navigator.bluetooth) {
-            console.log('web Bluetooth is not available!')
-            return false
-        }
-        return true
-    }
-    
-    function getBLEDeviceInfo() {
-        let options = {
-            acceptAllDevices: true
-        }
+  var deviceName = 'Palm'
 
-        console.log('Requesting Bluetooth Device...')
-        navigator.bluetooth.requestDevice(options).then(device => {
-            console.log('> Name:             ' + device.name)
-        }).catch(error => {
-            console.log('Argh! ' + error)
-        })
-
-        
+  function isWebBluetoothEnabled() {
+    if (!navigator.bluetooth) {
+      console.log('Web Bluetooth API is not available in this browser!')
+      return false
     }
 
+    return true
+  }
 
-document.querySelector('form').addEventListener('submit', event => {
-   function(event)
+  function getDeviceInfo() {
+    let options = {
+      // acceptAllDevices: true // Option to accept all devices
+      "filters": [
+        { "name": deviceName }
+      ]
+    }
+
+    console.log('Requesting Bluetooth Device...')
+    navigator.bluetooth.requestDevice(options).then(device => {
+      console.log('> Name: ' + device.name)
+    }).catch(error => {
+      console.log('Argh! ' + error)
+    })
+  }
+
+  document.querySelector('form').addEventListener('submit', function(event) {
     event.stopPropagation()
     event.preventDefault()
 
-    if (isWebBLEAvailable()) {
-        getBLEDeviceInfo()
-
-    }})
+    if (isWebBluetoothEnabled()) {
+      getDeviceInfo()
+    }
+  })
 </script>
